@@ -26,8 +26,10 @@ def customer_tickets(conn, customer_id):
             WHERE tickets.customer_id = ?
             ORDER BY films.title ASC
             '''
-    cursor = conn.execute(query, (customer_id))
-    pass
+    cursor = conn.execute(query, (customer_id,))
+    return [(row[0], row[1], row[2]) for row in cursor]
+
+    
 
 
 def screening_sales(conn):
@@ -47,7 +49,9 @@ def screening_sales(conn):
             ORDER BY tickets_sold DESC
             '''
     cursor = conn.execute(query)
-    pass
+    return [(row[0], row[1], row[2]) for row in cursor]
+
+    
 
 
 def top_customers_by_spend(conn, limit):
@@ -68,4 +72,6 @@ def top_customers_by_spend(conn, limit):
             ORDER BY total_spent DESC
             LIMIT ?
             '''
-    pass
+    cursor = conn.execute(query,(limit,))
+    return [(row[0], row[1]) for row in cursor]
+
